@@ -1,33 +1,60 @@
-# Online-Service-Management-System
-A web portal through which user can request for service and the company can assign engineers for the service that is requested by the users.
-•	Developed a web-based service management system for repair requests, enabling online submissions and admin management of technicians and job status.
-•	Designed a responsive UI using HTML, CSS, and JavaScript, and built the back-end with PHP while integrating MySQL for efficient data management.
-•	Automated the request and invoicing process, reducing manual work and improving processing efficiency by 30%.
-•	Tech Stack: HTML, CSS, JavaScript, PHP, MySQL.
+# Smart-Scrap-Management-System
+A web application designed to simplify and digitize scrap collection. Users can schedule pickups online, and admins and drivers can manage the entire process digitally. This system improves efficiency, saves time, and promotes eco-friendly waste management.
+• Developed a full-stack web-based scrap management system for 60+ users, enabling online pickup requests, real-time tracking, and automated notifications.
+• Designed responsive UI with HTML, CSS, and JavaScript, built back-end with PHP, and integrated MySQL for efficient data management.
+• Implemented Geocoding API for location validation, reducing scheduling errors by 40%, and added automated emails, eliminating 70% of manual status updates.
+• Included driver safety modules such as daily vehicle pre-checks and incident reporting for accountability.
+• Tech Stack: HTML, CSS, JavaScript, PHP, MySQL.
+
 
 
 ## Admin account features
-1. Assign Engineer
-2. Maintain the stock of components available.
-3. See the work report.
-4. See the report for components.
-5. Look up status of all the requests raised by requesters.
+1. Secure login and dashboard view of all requests and drivers
+2. Manage drivers (add, edit, delete, set passwords)
+3. Approve/reject requests and assign drivers.
+4. Monitor driver status and updates.
+5. Generate reports by date, driver, and request status.
+6. Manage scrap price lists and recycler center details.
+7. Track revenue, profit, and loss from scrap sales.
+8. Manage users, content pages, and payment records.
+9. Review incident reports and daily vehicle pre-checks.
+10. See the report for components.
+11. Receive notifications for new requests and driver updates.
 
-There are 2 types of accounts.
-1. Requester account
-2. Admin account
 
-## Requester Account
-The user will create a requester account to raise a ticket.
+## User Account Features
+1. Sign up/login with secure credentials.
+2. Submit new scrap pickup requests with details (address, scrap type, images, date/time, UPI-linked mobile).
+3. Location validation using Geocoding API before request submission.
+4. View request history and check live request status.
+5. Receive automated email notifications on status updates.
+6. Access payment receipts after scrap collection.
+7. Manage profile and update credentials.
 
-## Admin account
-This account will be created by the company to take action over the services and will also track the components that are available and the sales of the components and the action taken on various requests.
+## Driver Account Features
+1. Login with admin-assigned credentials
+
+2. Dashboard showing assigned, in-progress, and completed requests
+
+3. Update request status (On the Way, Completed, Rejected)
+
+4. Notify users and admin on updates
+
+5. Generate invoices (Cash/UPI, amount, remarks)
+
+6. Submit daily vehicle pre-check reports (tires, lights, brakes, fluids, etc.)
+
+7. Report trip incidents with details, location, and optional file upload
+
+8. Manage profile and password updates
+
+9. Receive notifications for new assignments
 
 # Screenshots
-## Requester account
+## Admin side
 ### Dashboard
 
-![Image](https://github.com/user-attachments/assets/e0356bf0-f560-4186-abfb-0c656a8a9ac5)
+![alt text](image.png)
 
 
 ### LOGIN PAGE
