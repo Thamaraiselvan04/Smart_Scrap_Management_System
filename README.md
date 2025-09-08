@@ -49,6 +49,7 @@ A web application designed to simplify and digitize scrap collection. Users can 
 ![alt text](logo/image-1.png)
 
 
+
 ### Price List page
 ![alt text](logo/image-2.png)
 
