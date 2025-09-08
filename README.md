@@ -54,7 +54,7 @@ A web application designed to simplify and digitize scrap collection. Users can 
 ## Admin side
 ### Index page
 
-![alt text](image-1.png)
+![alt text](logo/image-1.png)
 
 
 ### Price List page
