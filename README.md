@@ -33,21 +33,13 @@ A web application designed to simplify and digitize scrap collection. Users can 
 
 ## Driver Account Features
 1. Login with admin-assigned credentials
-
 2. Dashboard showing assigned, in-progress, and completed requests
-
 3. Update request status (On the Way, Completed, Rejected)
-
 4. Notify users and admin on updates
-
 5. Generate invoices (Cash/UPI, amount, remarks)
-
 6. Submit daily vehicle pre-check reports (tires, lights, brakes, fluids, etc.)
-
 7. Report trip incidents with details, location, and optional file upload
-
 8. Manage profile and password updates
-
 9. Receive notifications for new assignments
 
 # Screenshots
