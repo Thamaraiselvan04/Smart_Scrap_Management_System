@@ -58,47 +58,47 @@ A web application designed to simplify and digitize scrap collection. Users can 
 
 
 ### Price List page
-![alt text](image-2.png)
+![alt text](logo/image-2.png)
 
 ### Driver Dashboard
-![alt text](image-3.png)
+![alt text](logo/image-3.png)
 
 
 
 ### View-complain-details page
-![alt text](image-4.png)
+![alt text](logo/image-4.png)
 
 ### Lodged-complain-report page
-![alt text](image-5.png)
+![alt text](logo/image-5.png)
 
 ### User Dashboard page
-![alt text](image-6.png)
+![alt text](logo/image-6.png)
 
 ### Lodged-complain page
-![alt text](image-7.png)
+![alt text](logo/image-7.png)
 
 ### View-lodged-complain-detail page
-![alt text](image-8.png)
+![alt text](logo/image-8.png)
 
 
 ### Payment_receipt page
-![alt text](image-9.png)
+![alt text](logo/image-9.png)
 
 ### Admin dashboard page
-![alt text](image-10.png)
+![alt text](logo/image-10.png)
 
 ### View-complain-detail page
-![alt text](image-11.png)
+![alt text](logo/image-11.png)
 ### Admin_price_list page
-![alt text](image-12.png)
+![alt text](logo/image-12.png)
 ### Scrap_collection_list page
-![alt text](image-13.png)
+![alt text](logo/image-13.png)
 
 ### Sell_profit_report page:
-![alt text](image-14.png)
+![alt text](logo/image-14.png)
 
 ### Recycle_center page
-![alt text](image-15.png)
+![alt text](logo/image-15.png)
 
 ### Reg-users page:
-![alt text](image-16.png)
+![alt text](logo/image-16.png)
