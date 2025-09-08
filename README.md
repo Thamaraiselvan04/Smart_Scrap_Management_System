@@ -1,9 +1,9 @@
 # Smart-Scrap-Management-System
 A web application designed to simplify and digitize scrap collection. Users can schedule pickups online, and admins and drivers can manage the entire process digitally. This system improves efficiency, saves time, and promotes eco-friendly waste management.
-• Developed a full-stack web-based scrap management system for 60+ users, enabling online pickup requests, real-time tracking, and automated notifications.
-• Designed responsive UI with HTML, CSS, and JavaScript, built back-end with PHP, and integrated MySQL for efficient data management.
-• Implemented Geocoding API for location validation, reducing scheduling errors by 40%, and added automated emails, eliminating 70% of manual status updates.
-• Included driver safety modules such as daily vehicle pre-checks and incident reporting for accountability.
+1. Developed a full-stack web-based scrap management system for 60+ users, enabling online pickup requests, real-time tracking, and automated notifications.
+2. Designed responsive UI with HTML, CSS, and JavaScript, built back-end with PHP, and integrated MySQL for efficient data management.
+3. Implemented Geocoding API for location validation, reducing scheduling errors by 40%, and added automated emails, eliminating 70% of manual status updates.
+4. Included driver safety modules such as daily vehicle pre-checks and incident reporting for accountability.
 • Tech Stack: HTML, CSS, JavaScript, PHP, MySQL.
 
 
@@ -52,40 +52,53 @@ A web application designed to simplify and digitize scrap collection. Users can 
 
 # Screenshots
 ## Admin side
-### Dashboard
+### Index page
 
-![alt text](image.png)
-
-
-### LOGIN PAGE
-![Image](https://github.com/user-attachments/assets/1d8cb744-ba78-444e-92d4-0c0a7a23652e)
-
-### USER PROFILE
-![Image](https://github.com/user-attachments/assets/4edc35ef-3866-40ac-9f85-ff37764a4087)
+![alt text](image-1.png)
 
 
-## Admin account
-### Dashboard
-![Image](https://github.com/user-attachments/assets/231d37ec-5fe5-4e88-9680-0f9427d32330)
-### USER REQUEST
-![Image](https://github.com/user-attachments/assets/c1a311b0-5465-495c-b3a7-146e5fc67671)
+### Price List page
+![alt text](image-2.png)
 
-### work status
-![Image](https://github.com/user-attachments/assets/dc35a796-3e74-4027-a270-6cb0232404e1)
+### Driver Dashboard
+![alt text](image-3.png)
 
-### Work order
-![Image](https://github.com/user-attachments/assets/0793dde5-a71f-4fee-8e4a-1ac25863c57f)
 
-### Requests
 
-![Image](https://github.com/user-attachments/assets/2c1b12da-34f1-4f47-921b-64860841c1b4)
-### Assets
-![Image](https://github.com/user-attachments/assets/973ec8cd-3b61-4f7c-9367-bb573807674f)
+### View-complain-details page
+![alt text](image-4.png)
 
-### Technician
-![Image](https://github.com/user-attachments/assets/e653a7a2-29bd-4898-a5d4-42a1cfd7cdd4)
+### Lodged-complain-report page
+![alt text](image-5.png)
 
-### Sell Report
-![Image](https://github.com/user-attachments/assets/d3e6c256-62a8-4c0c-8afa-f6264dbd6282)
-### Work Report
-![Image](https://github.com/user-attachments/assets/3a0f2566-8920-430a-bddb-19835e90b086)
+### User Dashboard page
+![alt text](image-6.png)
+
+### Lodged-complain page
+![alt text](image-7.png)
+
+### View-lodged-complain-detail page
+![alt text](image-8.png)
+
+
+### Payment_receipt page
+![alt text](image-9.png)
+
+### Admin dashboard page
+![alt text](image-10.png)
+
+### View-complain-detail page
+![alt text](image-11.png)
+### Admin_price_list page
+![alt text](image-12.png)
+### Scrap_collection_list page
+![alt text](image-13.png)
+
+### Sell_profit_report page:
+![alt text](image-14.png)
+
+### Recycle_center page
+![alt text](image-15.png)
+
+### Reg-users page:
+![alt text](image-16.png)
