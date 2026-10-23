@@ -10,7 +10,7 @@ define('ADMIN_PIN', '600045');
 define('MAX_DISTANCE_KM', 55);
 
 // OpenCage API Key
-define('OPENCAGE_API_KEY', 'myap');
+define('OPENCAGE_API_KEY', 'myapi');
 
 // You can add other global configurations here if needed
 // For example, SMTP details if not using PHPMailer directly:

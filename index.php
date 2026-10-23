@@ -289,6 +289,9 @@ $phoneDisplay = $contactPhone ? '+' . ltrim($contactPhone, '+') : '';
         /* Page loader */
         #loader{position:fixed;inset:0;background:#fff;display:grid;place-items:center;z-index:9999;transition:opacity .4s}
         #loader.hide{opacity:0;pointer-events:none}
+        /* Scroll animations slide items in from the side. Clip each section so the
+           sliding items never make the page wider than the phone screen. */
+        section,footer{overflow-x:hidden;overflow-x:clip}
         /* phones: smaller column gap so nothing sticks out sideways */
         @media(max-width:575px){.row.g-5{--bs-gutter-x:1.5rem}}
         .leaf-spin{width:56px;height:56px;border:5px solid var(--g-100);border-top-color:var(--g-700);border-radius:50%;animation:spin 1s linear infinite}

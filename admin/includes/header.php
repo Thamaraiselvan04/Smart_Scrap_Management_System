@@ -32,7 +32,7 @@ $totalreq=$query->rowCount();
   ?>
                     <a class="ss-note" href="view-complain-detail.php?editid=<?php echo htmlentities($row->compid); ?>&comid=<?php echo htmlentities($row->ComplainNumber); ?>">
                         <b>Request #<?php echo $row->ComplainNumber; ?></b>
-                        <small><i class="fa fa-user"></i> <?php echo $row->FullName;?> <?php echo $row->DateofRequest;?></small>
+                        <small><i class="fa fa-user"></i> <?php echo $row->FullName;?></small>
                     </a>
                           <?php }?>
                 </div>

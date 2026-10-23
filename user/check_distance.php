@@ -33,7 +33,7 @@ function safeLog($msg) {
 define('ADMIN_LAT_SERVER', 12.935160);   // West Tambaram, Chennai
 define('ADMIN_LON_SERVER', 80.096417);
 define('MAX_DISTANCE_KM', 35);
-define('OPENCAGE_API_KEY', 'myap');
+define('OPENCAGE_API_KEY', 'myapi');
 // ====================
 
 function haversineGreatCircleDistance($latFrom, $lonFrom, $latTo, $lonTo, $earthRadius = 6371) {

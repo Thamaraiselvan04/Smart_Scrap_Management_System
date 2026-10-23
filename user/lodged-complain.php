@@ -8,7 +8,6 @@ session_start();
 include('includes/dbconnection.php'); // Your database connection
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-
 require '../vendor/autoload.php'; // Path to your Composer autoloader
 
 // Define Admin Godown Coordinates (YOUR PRECISE GODOWN LOCATION from Google Maps)
@@ -16,11 +15,10 @@ require '../vendor/autoload.php'; // Path to your Composer autoloader
 define('ADMIN_LAT_SERVER', 12.935160); // West Tambaram, Chennai - VERIFY THIS IS YOUR EXACT PLOT COORDINATE
 define('ADMIN_LON_SERVER', 80.096417); // West Tambaram, Chennai - VERIFY THIS IS YOUR EXACT PLOT COORDINATE
 define('MAX_DISTANCE_KM', 35); // Max service distance in KM
-define('OPENCAGE_API_KEY', 'myap'); // Your OpenCage API Key
+define('OPENCAGE_API_KEY', 'myapi'); // Your OpenCage API Key
 
 // Haversine distance function - duplicated for server-side validation here.
-function haversineGreatCircleDistance($latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $earthRadius = 6371)
-{
+function haversineGreatCircleDistance($latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $earthRadius = 6371) {
     $latFrom = deg2rad($latitudeFrom);
     $lonFrom = deg2rad($longitudeFrom);
     $latTo = deg2rad($latitudeTo);
@@ -100,7 +98,7 @@ if (isset($_POST['submit'])) {
 
         $encodedAddress = urlencode($fullAddressForOpenCage);
         $opencageUrl = "https://api.opencagedata.com/geocode/v1/json?q=$encodedAddress&key=" . OPENCAGE_API_KEY . "&countrycode=in&limit=1";
-
+        
         $ch = curl_init();
         curl_setopt_array($ch, [
             CURLOPT_URL => $opencageUrl,
@@ -121,7 +119,7 @@ if (isset($_POST['submit'])) {
             error_log("OpenCage HTTP error $httpStatus in lodged-complain.php: $apiResponse");
         } else {
             $data = json_decode($apiResponse, true);
-
+            
             if (empty($data['results'])) {
                 $serverMessage = 'Could not verify location. Please check your address.';
             } else {
@@ -132,7 +130,7 @@ if (isset($_POST['submit'])) {
                 $geocodedCountry = $result['components']['country_code'] ?? null;
 
                 $distance = haversineGreatCircleDistance(ADMIN_LAT_SERVER, ADMIN_LON_SERVER, $userLat, $userLon);
-
+                
                 if ($distance > MAX_DISTANCE_KM) {
                     $serverLocationStatus = 'rejected';
                     $serverMessage = 'Oops!--- We are sorry, but our services are currently unavailable in this location. We’re working to expand soon!';
@@ -151,7 +149,7 @@ if (isset($_POST['submit'])) {
         }
         curl_close($ch);
     }
-
+    
     if ($serverLocationStatus !== 'verified') {
         $_SESSION['swal_message'] = ['icon' => 'error', 'title' => 'Submission Blocked', 'text' => $serverMessage];
         header("Location: lodged-complain.php");
@@ -175,16 +173,13 @@ if (isset($_POST['submit'])) {
 
     $uid = $_SESSION['uuid'];
     $note = $_POST['note'];
-    $upi = trim($_POST['upi'] ?? '');
-    if ($upi === '') {
-        $upi = null;
-    }   // save empty as NULL
+    $upi = $_POST['upi'];
     $date = $_POST['date'];
     $time = $_POST['time'];
     $paymentmode = $_POST['paymentmode'];
 
     $garbagephoto = $_FILES["garbagephoto"]["name"];
-    $extension = strtolower(pathinfo($garbagephoto, PATHINFO_EXTENSION));
+    $extension = strtolower(pathinfo($garbagephoto, PATHINFO_EXTENSION)); 
     $allowed_extensions = array("jpg", "jpeg", "png", "gif");
 
     if (!in_array($extension, $allowed_extensions)) {
@@ -203,10 +198,10 @@ if (isset($_POST['submit'])) {
         $query = $dbh->prepare($sql);
         $query->bindParam(':uid', $uid, PDO::PARAM_INT);
         $query->bindParam(':complainnum', $complainnum, PDO::PARAM_INT);
-        $query->bindParam(':area', $area, PDO::PARAM_STR);
-        $query->bindParam(':locality', $locality, PDO::PARAM_STR);
-        $query->bindParam(':landmark', $landmark, PDO::PARAM_STR);
-        $query->bindParam(':address', $address, PDO::PARAM_STR);
+        $query->bindParam(':area', $area, PDO::PARAM_STR); 
+        $query->bindParam(':locality', $locality, PDO::PARAM_STR); 
+        $query->bindParam(':landmark', $landmark, PDO::PARAM_STR); 
+        $query->bindParam(':address', $address, PDO::PARAM_STR); 
         $query->bindParam(':garbagephoto', $garbagephoto, PDO::PARAM_STR);
         $query->bindParam(':note', $note, PDO::PARAM_STR);
         $query->bindParam(':upi', $upi, PDO::PARAM_STR);
@@ -259,16 +254,16 @@ if (isset($_POST['submit'])) {
                     $mail->isHTML(false);
                     $mail->Subject = "Your Request #{$requestData['ComplainNumber']} Is Received";
                     $mail->Body     =
-                        "Dear {$requestData['FullName']},\n\n" .
-                        "Thank you! Your scrap pickup request (#{$requestData['ComplainNumber']}) has been received successfully.\n\n" .
-                        "Request Details:\n" .
-                        "- Scrap Type: {$requestData['Scraptype']}\n" .
-                        "- Pickup Date: {$requestData['Date']}\n" .
-                        "- Pickup Time: {$requestData['Time']}\n" .
+                        "Dear {$requestData['FullName']},\n\n".
+                        "Thank you! Your scrap pickup request (#{$requestData['ComplainNumber']}) has been received successfully.\n\n".
+                        "Request Details:\n".
+                        "- Scrap Type: {$requestData['Scraptype']}\n".
+                        "- Pickup Date: {$requestData['Date']}\n".
+                        "- Pickup Time: {$requestData['Time']}\n".
                         "- Location: {$requestData['Address']}, PIN: {$requestData['Pin']}\n\n";
 
-                    $mail->Body .= "We will contact you shortly to confirm the pickup details.\n\n" .
-                        "— The Smart Scrap Team";
+                    $mail->Body .= "We will contact you shortly to confirm the pickup details.\n\n".
+                                    "— The Smart Scrap Team";
 
                     $userEmailSent = $mail->send();
                     $mail->clearAddresses();
@@ -279,22 +274,22 @@ if (isset($_POST['submit'])) {
 
                     $mail->Subject = "New Scrap Pickup Request #{$requestData['ComplainNumber']}";
                     $mail->Body     =
-                        "New scrap pickup request received:\n\n" .
-                        "Request #: {$requestData['ComplainNumber']}\n" .
-                        "Customer: {$requestData['FullName']}\n" .
-                        "Contact: {$requestData['MobileNumber']}\n" .
-                        "Email: {$requestData['Email']}\n" .
-                        "Scrap Type: {$requestData['Scraptype']}\n" .
-                        "Pickup Date: {$requestData['Date']}\n" .
-                        "Pickup Time: {$requestData['Time']}\n" .
-                        "Location:\n" .
-                        "   Area: {$requestData['Area']}\n" .
-                        "   Locality: {$requestData['Locality']}\n" .
-                        "   Landmark: {$requestData['Landmark']}\n" .
-                        "   Address: {$requestData['Address']}\n" .
+                        "New scrap pickup request received:\n\n".
+                        "Request #: {$requestData['ComplainNumber']}\n".
+                        "Customer: {$requestData['FullName']}\n".
+                        "Contact: {$requestData['MobileNumber']}\n".
+                        "Email: {$requestData['Email']}\n".
+                        "Scrap Type: {$requestData['Scraptype']}\n".
+                        "Pickup Date: {$requestData['Date']}\n".
+                        "Pickup Time: {$requestData['Time']}\n".
+                        "Location:\n".
+                        "   Area: {$requestData['Area']}\n".
+                        "   Locality: {$requestData['Locality']}\n".
+                        "   Landmark: {$requestData['Landmark']}\n".
+                        "   Address: {$requestData['Address']}\n".
                         "   Pin: {$requestData['Pin']}\n";
 
-                    $mail->Body .= "Payment Mode: {$paymentmode}\n" .
+                    $mail->Body .= "Payment Mode: {$paymentmode}\n".
                         (($paymentmode == 'UPI') ? "UPI: {$upi}\n" : "") .
                         (($note) ? "Additional Notes: {$note}\n" : "") .
                         "\nPlease process this request promptly.";
@@ -311,6 +306,7 @@ if (isset($_POST['submit'])) {
                     } else {
                         $emailStatus = "Email notifications failed.";
                     }
+
                 } catch (Exception $e) {
                     error_log("Mailer Error: " . $mail->ErrorInfo);
                     $emailStatus = "Email error: " . $e->getMessage();
@@ -347,110 +343,83 @@ $selectedScraps = isset($_SESSION['selected_scraps']) && is_array($_SESSION['sel
 
 <head>
     <title>Smart Scrap System - Lodged Complain</title>
-
+    
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/vendor/themify-icons/themify-icons.css">
     <link rel="stylesheet" href="../assets/vendor/fontawesome/css/font-awesome.min.css">
-
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.min.css">
-
+    
     <link rel="stylesheet" href="../assets/css/main.css">
-
-    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    
+    <link rel="icon" href="../img1/trash.png" />
 
     <style>
         .required:after {
             content: " *";
             color: #dc3545;
         }
-
-        #scrapError,
-        #photoError {
+        #scrapError, #photoError { 
             display: none;
             color: #dc3545;
             font-size: 0.875em;
             margin-top: 0.25rem;
         }
-
         #garbagephoto[disabled] {
             opacity: 0.5;
             cursor: not-allowed;
         }
-
         #submitButton[disabled] {
             opacity: 0.7;
             cursor: not-allowed;
         }
-
         .input-group-append .input-group-text {
             pointer-events: none;
         }
-
         #locationStatusMessage {
             font-weight: 600;
             margin: 10px 0;
             padding: 12px 16px;
             border-radius: 12px;
         }
-
-        #locationStatusMessage:empty {
-            display: none;
-        }
-
+        #locationStatusMessage:empty { display: none; }
         #locationStatusMessage.success {
             color: #28a745;
             background-color: #d4edda;
             border: 1px solid #c3e6cb;
         }
-
         #locationStatusMessage.error {
             color: #dc3545;
             background-color: #f8d7da;
             border: 1px solid #f5c6cb;
         }
-
         .optional-field:after {
             content: " (Optional)";
             color: #6c757d;
             font-weight: normal;
         }
-
         .form-group {
             margin-bottom: 1.5rem;
         }
-
         .form-section {
             margin-bottom: 2rem;
             padding-bottom: 1rem;
             border-bottom: 1px solid #eee;
         }
-
         .form-section:last-child {
             border-bottom: none;
         }
-
         .form-section-title {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            display: flex; align-items: center; gap: 10px;
             font: 600 1.05rem 'Poppins', sans-serif;
             margin-bottom: 1rem;
             color: var(--g-800);
         }
-
-        .form-section-title::before {
-            content: "";
-            width: 6px;
-            height: 20px;
-            border-radius: 6px;
-            background: linear-gradient(var(--g-600), var(--lime));
-        }
-
+        .form-section-title::before { content: ""; width: 6px; height: 20px; border-radius: 6px; background: linear-gradient(var(--g-600), var(--lime)); }
         .btn-select-scrap {
             white-space: nowrap;
             margin-left: 10px;
         }
-
         #previewArea img {
             max-width: 220px;
             max-height: 200px;
@@ -460,48 +429,27 @@ $selectedScraps = isset($_SESSION['selected_scraps']) && is_array($_SESSION['sel
             padding: 5px;
             background: #fff;
         }
-
         .time-input-group {
             display: flex;
             align-items: center;
         }
-
         .time-input-group input {
             flex: 1;
         }
-
-        .time-input-group {
-            gap: 8px;
-        }
-
+        .time-input-group { gap: 8px; }
         .time-input-group .input-group-text {
-            width: 70px;
-            justify-content: center;
-            min-height: 46px;
+            width: 70px; justify-content: center; min-height: 46px;
         }
-
         .scrap-selection-container {
             display: flex;
             align-items: center;
             gap: 10px;
         }
-
-        .scrap-selection-container .btn-select-scrap {
-            margin-left: 0;
-            flex-shrink: 0;
-        }
-
+        .scrap-selection-container .btn-select-scrap { margin-left: 0; flex-shrink: 0; }
         @media (max-width: 575.98px) {
-            .scrap-selection-container {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .scrap-selection-container input {
-                margin-right: 0 !important;
-            }
+            .scrap-selection-container { flex-direction: column; align-items: stretch; }
+            .scrap-selection-container input { margin-right: 0 !important; }
         }
-
         .scrap-selection-container input {
             margin-right: 10px;
         }
@@ -531,7 +479,7 @@ $selectedScraps = isset($_SESSION['selected_scraps']) && is_array($_SESSION['sel
 
                                     <div class="form-section">
                                         <div class="form-section-title">Location Details</div>
-
+                                        
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
@@ -546,17 +494,17 @@ $selectedScraps = isset($_SESSION['selected_scraps']) && is_array($_SESSION['sel
                                                 </div>
                                             </div>
                                         </div>
-
+                                        
                                         <div class="form-group">
                                             <label class="optional-field">Landmark</label>
                                             <input type="text" name="landmark" id="landmarkInput" class="form-control" value="<?= htmlspecialchars($_POST['landmark'] ?? '') ?>">
                                         </div>
-
+                                        
                                         <div class="form-group">
                                             <label class="required">Address</label>
                                             <textarea name="address" id="addressInput" class="form-control" rows="3" required><?= htmlspecialchars($_POST['address'] ?? '') ?></textarea>
                                         </div>
-
+                                        
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
@@ -565,7 +513,7 @@ $selectedScraps = isset($_SESSION['selected_scraps']) && is_array($_SESSION['sel
                                                 </div>
                                             </div>
                                         </div>
-
+                                        
                                         <div id="locationStatusMessage" class="mt-2"></div>
                                     </div>
 
@@ -585,7 +533,7 @@ $selectedScraps = isset($_SESSION['selected_scraps']) && is_array($_SESSION['sel
                                                 <option value="Cash" <?= (isset($_POST['paymentmode']) && $_POST['paymentmode'] == 'Cash') ? 'selected' : '' ?>>Cash</option>
                                             </select>
                                         </div>
-
+                                        
                                         <div class="form-group" id="upi-group" style="display:none;">
                                             <label class="required">UPI-linked Mobile No</label>
                                             <input type="tel" name="upi" id="upiField" class="form-control" placeholder="Enter UPI-linked number" value="<?= htmlspecialchars($_POST['upi'] ?? '') ?>">
@@ -613,11 +561,11 @@ $selectedScraps = isset($_SESSION['selected_scraps']) && is_array($_SESSION['sel
                                     </div>
 
                                     <div class="form-section">
-                                        <label class="required">Scrap Types</label>
-                                        <div class="scrap-selection-container">
-                                            <input type="text" id="scraptype" name="scraptype" class="form-control" value="<?= htmlspecialchars($selectedScraps) ?>" readonly required>
-                                            <button type="button" id="selectScrapButton" class="btn btn-outline-success btn-select-scrap">Select Scrap Types</button>
-                                        </div>
+                                    <label class="required">Scrap Types</label>
+                                    <div class="scrap-selection-container">
+                                        <input type="text" id="scraptype" name="scraptype" class="form-control" value="<?= htmlspecialchars($selectedScraps) ?>" readonly required>
+                                        <button type="button" id="selectScrapButton" class="btn btn-outline-success btn-select-scrap">Select Scrap Types</button>
+                                    </div>
                                     </div>
 
                                     <div class="form-section">
@@ -648,7 +596,7 @@ $selectedScraps = isset($_SESSION['selected_scraps']) && is_array($_SESSION['sel
     <script src="../assets/vendor/parsleyjs/js/parsley.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.18/dist/sweetalert2.all.min.js"></script>
     <script src="../assets/js/theme.js"></script>
-
+    
     <script>
         // SweetAlert helper function
         function showSwal(options) {
@@ -705,14 +653,14 @@ $selectedScraps = isset($_SESSION['selected_scraps']) && is_array($_SESSION['sel
                 scraptypeInput.disabled = !enable; // Disable the text input, not the button
                 garbagephotoInput.disabled = !enable;
                 submitButton.disabled = !enable;
-
+                
                 // Select Scrap button itself is always enabled
                 if (selectScrapButton) {
                     selectScrapButton.disabled = false;
                 }
 
                 // Handle UPI field visibility and required state
-                toggleUPI();
+                toggleUPI(); 
             }
 
             // --- Toggle UPI field visibility based on payment mode ---
@@ -727,7 +675,7 @@ $selectedScraps = isset($_SESSION['selected_scraps']) && is_array($_SESSION['sel
                     upiField.required = false;
                 }
             }
-
+          
             // --- Location Verification Logic (using check_distance.php) ---
             let verificationTimeout; // Debounce timer
 
@@ -762,28 +710,26 @@ $selectedScraps = isset($_SESSION['selected_scraps']) && is_array($_SESSION['sel
                 locationStatusMessage.textContent = 'Verifying location...';
                 // Temporarily disable *dependent* fields while verifying, if not already verified
                 if (locationStatusFlag.value !== 'verified') {
-                    setFormElementsEnabled(false);
+                     setFormElementsEnabled(false);
                 }
 
                 try {
-                    const formData = new URLSearchParams();
-                    formData.append('address', address.replace(/\s+/g, ' ').trim());
-                    formData.append('pin', pin);
+                  const formData = new URLSearchParams();
+formData.append('address', address.replace(/\s+/g, ' ').trim());
+formData.append('pin', pin);
 
-                    const response = await fetch('check_distance.php', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        },
-                        body: formData
-                    });
+const response = await fetch('check_distance.php', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: formData
+});
 
                     if (!response.ok) {
                         throw new Error(`HTTP error! status: ${response.status}`);
                     }
 
                     const result = await response.json();
-
+                    
                     if (result.status === 'success') {
                         console.log('Client-side: Location verified successfully via check_distance.php');
                         locationStatusMessage.classList.remove('error');
@@ -842,44 +788,41 @@ $selectedScraps = isset($_SESSION['selected_scraps']) && is_array($_SESSION['sel
                     });
                 } finally {
                     // Ensure UPI field's required status is correctly set after enabling
-                    toggleUPI();
+                    toggleUPI(); 
                 }
             }
 
 
-            document.getElementById('selectScrapButton').addEventListener('click', function() {
-                const form = document.getElementById('complaintForm');
-                const formData = new URLSearchParams();
-                ['area', 'locality', 'landmark', 'address', 'pin', 'note',
-                    'paymentmode', 'upi', 'date', 'time', 'location_status_flag'
-                ].forEach(function(name) {
-                    const field = form.elements[name];
-                    if (field) formData.append(name, field.value);
-                });
+           document.getElementById('selectScrapButton').addEventListener('click', function() {
+    const form = document.getElementById('complaintForm');
+    const formData = new URLSearchParams();
+    ['area', 'locality', 'landmark', 'address', 'pin', 'note',
+     'paymentmode', 'upi', 'date', 'time', 'location_status_flag'].forEach(function(name) {
+        const field = form.elements[name];
+        if (field) formData.append(name, field.value);
+    });
 
-                fetch('lodged-complain.php?save=1', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        },
-                        body: formData
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            window.location.href = 'price_list.php';
-                        } else {
-                            throw new Error('Failed to save form data');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        showSwal({
-                            icon: 'error',
-                            title: 'Error',
-                            text: 'Could not save form data. Please try again.',
-                            confirmButtonText: 'OK'
-                        });
+    fetch('lodged-complain.php?save=1', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: formData
+    })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = 'price_list.php';
+                    } else {
+                        throw new Error('Failed to save form data');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    showSwal({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Could not save form data. Please try again.',
+                        confirmButtonText: 'OK'
                     });
+                });
             });
 
             // Attach event listeners to address and pin input fields to trigger verification
@@ -909,12 +852,12 @@ $selectedScraps = isset($_SESSION['selected_scraps']) && is_array($_SESSION['sel
 
             // --- DATE PICKER SETUP (ensure this works with disabled state) ---
             if (pickupDateInput) {
-                const today = new Date();
-                const maxDate = new Date();
-                maxDate.setDate(today.getDate() + 30); // 31 days from today
+              const today = new Date();
+const maxDate = new Date();
+maxDate.setDate(today.getDate() + 30); // 31 days from today
 
-                pickupDateInput.min = today.toISOString().split('T')[0]; // Set minimum date to today
-                pickupDateInput.max = maxDate.toISOString().split('T')[0]; // Set minimum date to today
+pickupDateInput.min = today.toISOString().split('T')[0]; // Set minimum date to today
+pickupDateInput.max = maxDate.toISOString().split('T')[0]; // Set minimum date to today
 
                 // Validate date and time selection
                 const updateAmPmDisplay = () => {
@@ -1020,7 +963,8 @@ $selectedScraps = isset($_SESSION['selected_scraps']) && is_array($_SESSION['sel
                         message = 'Invalid Pin Number format.';
                     } else if (locationStatusFlag.value === 'rejected') {
                         message = 'Your location is outside our service area. Please correct your address or contact support.';
-                    } else {
+                    }
+                    else {
                         message = 'Please verify your location to proceed with the request.';
                     }
                     locationStatusMessage.textContent = message;
@@ -1031,10 +975,7 @@ $selectedScraps = isset($_SESSION['selected_scraps']) && is_array($_SESSION['sel
                         text: message,
                         confirmButtonText: 'OK'
                     });
-                    locationStatusMessage.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'center'
-                    });
+                    locationStatusMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     return;
                 }
 
@@ -1067,10 +1008,7 @@ $selectedScraps = isset($_SESSION['selected_scraps']) && is_array($_SESSION['sel
                     console.log('Client-side: Other form validations failed.');
                     const firstErrorField = !scraptypeInput.value.trim() ? scraptypeInput : (!garbagephotoInput.files || garbagephotoInput.files.length === 0 ? garbagephotoInput : null);
                     if (firstErrorField) {
-                        firstErrorField.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'center'
-                        });
+                        firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
                     }
                     showSwal({
                         icon: 'error',
@@ -1081,7 +1019,7 @@ $selectedScraps = isset($_SESSION['selected_scraps']) && is_array($_SESSION['sel
                 }
                 console.log('Client-side: All client-side validations passed. Form will now attempt to submit.');
             });
-
+            
             // Photo preview functionality
             const previewArea = document.getElementById('previewArea');
             if (garbagephotoInput) {
@@ -1107,5 +1045,4 @@ $selectedScraps = isset($_SESSION['selected_scraps']) && is_array($_SESSION['sel
         });
     </script>
 </body>
-
 </html>
